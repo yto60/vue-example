@@ -1,5 +1,7 @@
 # tofu-manju_client-template
 
+メモ: https://hackmd.io/h5gwD5tLSUi80k4v7mhTAA
+
 ## Project setup
 ```
 npm install
