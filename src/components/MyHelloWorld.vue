@@ -15,6 +15,13 @@
     <div :class="dynamicClass">クラス名を指定</div>
     <div :class="dynamicClass2">条件分岐もできる</div>
     <div :class="`has-color-${dynamicColor}`">文字列の中に変数を入れる</div>
+
+    <!-- メソッドを渡す場合 -->
+    <button @click="incrementCounter">Add 1</button>
+    <p>The button above has been clicked {{ counter }} times.</p>
+    <!-- 処理をそのまま記述する場合 -->
+    <button @click="say('hi')">Say hi</button>
+    <button @click="say('po')">Say po</button>
   </div>
 </template>
 
@@ -43,11 +50,20 @@ export default class MyHelloWorld extends Vue {
     'has-border-2': this.val === 'bar'
   }
   dynamicColor: string = 'red' // 'blue' に書き換えると青になる
+  counter: number = 0
 
   // Computed
   get activeUsers() {
     // isActive が true のユーザーのみのリストを返す
     return this.users.filter(user => user.isActive)
+  }
+
+  // Methods
+  incrementCounter() {
+    this.counter += 1
+  }
+  say(message: string) {
+    alert(message)
   }
 }
 </script>
