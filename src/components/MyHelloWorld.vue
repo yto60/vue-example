@@ -9,6 +9,12 @@
         {{ user.name }}
       </li>
     </ul>
+    <div v-bind:id="dynamicId">idを指定</div>
+    <div :id="dynamicId">idを指定</div>
+
+    <div :class="dynamicClass">クラス名を指定</div>
+    <div :class="dynamicClass2">条件分岐もできる</div>
+    <div :class="`has-color-${dynamicColor}`">文字列の中に変数を入れる</div>
   </div>
 </template>
 
@@ -30,6 +36,13 @@ export default class MyHelloWorld extends Vue {
       isActive: false
     }
   ]
+  dynamicId: string = 'my-id'
+  dynamicClass: string = 'has-underline'
+  dynamicClass2 = {
+    'has-border': this.val === 'foo',
+    'has-border-2': this.val === 'bar'
+  }
+  dynamicColor: string = 'red' // 'blue' に書き換えると青になる
 
   // Computed
   get activeUsers() {
@@ -39,4 +52,23 @@ export default class MyHelloWorld extends Vue {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+#my-id {
+  background-color: yellow;
+}
+.has-underline {
+  text-decoration: underline;
+}
+.has-color-red {
+  color: red;
+}
+.has-color-blue {
+  color: blue;
+}
+.has-border {
+  border: dotted black;
+}
+.has-border-2 {
+  border: thick green;
+}
+</style>
