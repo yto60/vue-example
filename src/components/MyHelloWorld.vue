@@ -26,6 +26,29 @@
       <button @click="say('hi')">Say hi</button>
       <button @click="say('po')">Say po</button>
     </div>
+
+    <div class="wrapper">
+      <label for="name">名前: </label>
+      <input v-model="name" id="name" />
+
+      <div>こんにちは、 {{ name }} さん</div>
+    </div>
+
+    <div class="wrapper">
+      <div>今は {{ selectedTime.label }} です。</div>
+
+      <span v-for="time in times" :key="time.id">
+        <input
+          type="radio"
+          :id="time.id"
+          :value="time"
+          v-model="selectedTime"
+        />
+        <!-- type, id, value はHTMLの属性 v-modelのみがvueに由来 -->
+        <label :for="time.id">{{ time.label }}</label>
+        <!-- <input> のid属性と <label> のfor属性を一致させることで、 <input> と <label> を対応づけられる -->
+      </span>
+    </div>
   </div>
 </template>
 
@@ -55,6 +78,13 @@ export default class MyHelloWorld extends Vue {
   }
   dynamicColor: string = 'red' // 'blue' に書き換えると青になる
   counter: number = 0
+  name: string = 'guest'
+  times = [
+    { id: 'morning', label: '朝' },
+    { id: 'midday', label: '昼' },
+    { id: 'night', label: '夜' }
+  ]
+  selectedTime = this.times[0]
 
   // Computed
   get activeUsers() {
