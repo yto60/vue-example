@@ -9,19 +9,23 @@
         {{ user.name }}
       </li>
     </ul>
-    <div v-bind:id="dynamicId">idを指定</div>
-    <div :id="dynamicId">idを指定</div>
 
-    <div :class="dynamicClass">クラス名を指定</div>
-    <div :class="dynamicClass2">条件分岐もできる</div>
-    <div :class="`has-color-${dynamicColor}`">文字列の中に変数を入れる</div>
+    <div class="wrapper">
+      <div v-bind:id="dynamicId">idを指定</div>
+      <div :id="dynamicId">idを指定</div>
+      <div :class="dynamicClass">クラス名を指定</div>
+      <div :class="dynamicClass2">条件分岐もできる</div>
+      <div :class="`has-color-${dynamicColor}`">文字列の中に変数を入れる</div>
+    </div>
 
-    <!-- メソッドを渡す場合 -->
-    <button @click="incrementCounter">Add 1</button>
-    <p>The button above has been clicked {{ counter }} times.</p>
-    <!-- 処理をそのまま記述する場合 -->
-    <button @click="say('hi')">Say hi</button>
-    <button @click="say('po')">Say po</button>
+    <div class="wrapper">
+      <!-- メソッドを渡す場合 -->
+      <button @click="incrementCounter">Add 1</button>
+      <p>The button above has been clicked {{ counter }} times.</p>
+      <!-- 処理をそのまま記述する場合 -->
+      <button @click="say('hi')">Say hi</button>
+      <button @click="say('po')">Say po</button>
+    </div>
   </div>
 </template>
 
@@ -69,6 +73,9 @@ export default class MyHelloWorld extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.wrapper {
+  margin: 3rem 0;
+}
 #my-id {
   background-color: yellow;
 }
