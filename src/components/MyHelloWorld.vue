@@ -59,11 +59,23 @@
       <MyButton :counterId="0" @button-clicked="incrementCounter" />
       <MyButton :counterId="1" @button-clicked="incrementCounter" />
     </div>
+
+    <div class="wrapper">
+      <button @click="getUserMe">ユーザー情報を取得</button>
+      <div v-if="me">
+        <div>ユーザーID: {{ me.id }}</div>
+        <div>表示名: {{ me.nickname }}</div>
+        <div>
+          ユーザー作成日時: {{ new Date(me.createdAt).toLocaleString() }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
+import axios from 'axios'
 import MyMessage from '@/components/MyMessage.vue'
 import MyButton from '@/components/MyButton.vue'
 
@@ -100,6 +112,7 @@ export default class MyHelloWorld extends Vue {
     { id: 'night', label: '夜' }
   ]
   selectedTime = this.times[0]
+  me: any = null
 
   // Computed
   get activeUsers() {
@@ -119,6 +132,23 @@ export default class MyHelloWorld extends Vue {
   }
   say(message: string) {
     alert(message)
+  }
+
+  async getUserMe() {
+    await axios
+      .get(
+        'https://virtserver.swaggerhub.com/60-deg/hitonome-API/1.0.0/users/me'
+      )
+      .then(res => {
+        console.log(res) // デバッグ用
+        this.me = res.data // this.meの値が更新されるので、ビューが更新され、updated()が自動的に呼ばれる
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+    // .then (または .catch) の中身の実行がすべて終わってから下のconsole.logが実行される
+    console.log('getUserMe end')
   }
 
   // lifecycle hooks
