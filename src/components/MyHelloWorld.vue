@@ -20,8 +20,8 @@
 
     <div class="wrapper">
       <!-- メソッドを渡す場合 -->
-      <button @click="incrementCounter">Add 1</button>
-      <p>The button above has been clicked {{ counter }} times.</p>
+      <button @click="incrementCounter(0)">Add 1</button>
+      <p>カウンター0: {{ counters[0] }}</p>
       <!-- 処理をそのまま記述する場合 -->
       <button @click="say('hi')">Say hi</button>
       <button @click="say('po')">Say po</button>
@@ -53,16 +53,24 @@
     <div class="wrapper">
       <MyMessage :messageId="1" :timeId="selectedTime.id" :name="name" />
     </div>
+
+    <div class="wrapper">
+      <div>カウンター1: {{ counters[1] }}</div>
+      <MyButton :counterId="0" @button-clicked="incrementCounter" />
+      <MyButton :counterId="1" @button-clicked="incrementCounter" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import MyMessage from '@/components/MyMessage.vue'
+import MyButton from '@/components/MyButton.vue'
 
 @Component({
   components: {
-    MyMessage
+    MyMessage,
+    MyButton
   }
 })
 export default class MyHelloWorld extends Vue {
@@ -84,7 +92,7 @@ export default class MyHelloWorld extends Vue {
     'has-border-2': this.val === 'bar'
   }
   dynamicColor: string = 'red' // 'blue' に書き換えると青になる
-  counter: number = 0
+  counters: number[] = [0, 100]
   name: string = 'guest'
   times = [
     { id: 'morning', label: '朝' },
@@ -100,8 +108,14 @@ export default class MyHelloWorld extends Vue {
   }
 
   // Methods
-  incrementCounter() {
-    this.counter += 1
+  incrementCounter(i: number) {
+    const currentCounter = this.counters[i]
+    this.$set(this.counters, i, currentCounter + 1)
+    // this.counters[i] += 1 と同じ (Vueに変更を検出してもらうために this.$set を使う)
+  }
+  decrementCounter(i: number) {
+    const currentCounter = this.counters[i]
+    this.$set(this.counters, i, currentCounter - 1) // 同上
   }
   say(message: string) {
     alert(message)
