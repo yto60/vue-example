@@ -49,14 +49,21 @@
         <!-- <input> のid属性と <label> のfor属性を一致させることで、 <input> と <label> を対応づけられる -->
       </span>
     </div>
+
+    <div class="wrapper">
+      <MyMessage :messageId="1" :timeId="selectedTime.id" :name="name" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
+import MyMessage from '@/components/MyMessage.vue'
 
 @Component({
-  components: {}
+  components: {
+    MyMessage
+  }
 })
 export default class MyHelloWorld extends Vue {
   val: string = 'foo'
