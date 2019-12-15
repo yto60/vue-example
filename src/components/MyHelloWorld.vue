@@ -120,6 +120,20 @@ export default class MyHelloWorld extends Vue {
   say(message: string) {
     alert(message)
   }
+
+  // lifecycle hooks
+  mounted() {
+    // 最初にビューが描画された時に発火
+    console.log('mounted')
+  }
+  updated() {
+    // ビューが更新された時に発火
+    console.log('updated')
+  }
+  beforeDestroy() {
+    // ビューが消える直前に発火
+    console.log('beforeDestroy')
+  }
 }
 </script>
 
