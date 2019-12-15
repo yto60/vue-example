@@ -70,6 +70,16 @@
         </div>
       </div>
     </div>
+
+    <div class="wrapper">
+      作成するグループ名: <input type="text" v-model="groupName" />
+      <button @click="postGroup">作成</button>
+      <div v-if="createdGroup">
+        <div>グループを作成しました！</div>
+        <div>id: {{ createdGroup.id }}</div>
+        <div>name: {{ createdGroup.name }}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -84,6 +94,12 @@ interface User {
   id: string
   nickname: string
   createdAt: string
+}
+interface Group {
+  id?: number
+  name: string
+  members: User[]
+  createdAt?: string
 }
 
 @Component({
@@ -120,6 +136,8 @@ export default class MyHelloWorld extends Vue {
   ]
   selectedTime = this.times[0]
   me: User | null = null
+  groupName: string | null = null
+  createdGroup: Group | null = null
 
   // Computed
   get activeUsers() {
@@ -156,6 +174,22 @@ export default class MyHelloWorld extends Vue {
 
     // .then (または .catch) の中身の実行がすべて終わってから下のconsole.logが実行される
     console.log('getUserMe end')
+  }
+
+  async postGroup() {
+    if (!this.groupName) return
+    const newGroup: Group = {
+      name: this.groupName,
+      members: []
+    }
+    await axios
+      .post(
+        'https://tofu-manju-test.free.beeceptor.com/groups',
+        newGroup // requestData
+      )
+      .then((res: AxiosResponse<Group>) => {
+        this.createdGroup = res.data
+      })
   }
 
   // lifecycle hooks
