@@ -152,9 +152,15 @@ export default class MyHelloWorld extends Vue {
   }
 
   // lifecycle hooks
-  mounted() {
+  async mounted() {
     // 最初にビューが描画された時に発火
-    console.log('mounted')
+    console.log(`mounted`)
+
+    // APIリクエストを送る
+    await this.getUserMe()
+
+    // .then (または .catch) の中身の実行がすべて終わってから下のconsole.logが実行される
+    console.log(`mounted2`)
   }
   updated() {
     // ビューが更新された時に発火
