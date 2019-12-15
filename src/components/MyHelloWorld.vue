@@ -75,9 +75,16 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import MyMessage from '@/components/MyMessage.vue'
 import MyButton from '@/components/MyButton.vue'
+
+// インターフェースの使用
+interface User {
+  id: string
+  nickname: string
+  createdAt: string
+}
 
 @Component({
   components: {
@@ -112,7 +119,7 @@ export default class MyHelloWorld extends Vue {
     { id: 'night', label: '夜' }
   ]
   selectedTime = this.times[0]
-  me: any = null
+  me: User | null = null
 
   // Computed
   get activeUsers() {
@@ -139,7 +146,7 @@ export default class MyHelloWorld extends Vue {
       .get(
         'https://virtserver.swaggerhub.com/60-deg/hitonome-API/1.0.0/users/me'
       )
-      .then(res => {
+      .then((res: AxiosResponse<User>) => {
         console.log(res) // デバッグ用
         this.me = res.data // this.meの値が更新されるので、ビューが更新され、updated()が自動的に呼ばれる
       })
