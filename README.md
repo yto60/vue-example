@@ -1,6 +1,6 @@
-# tofu-manju_client-template
+# vue-example
 
-メモ: https://hackmd.io/h5gwD5tLSUi80k4v7mhTAA
+解説: https://hackmd.io/lr6YDN1XSveWTWWOpgIA4A
 
 ## Project setup
 ```
